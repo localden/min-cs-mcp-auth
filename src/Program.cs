@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ModelContextProtocol.AspNetCore.Authentication;
 using ProtectedMcpServer.Tools;
-using System.Net.Http.Headers;
+// using System.Net.Http.Headers; // Removed: no longer registering WeatherApi HttpClient
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(options =>
     options.ResourceMetadata = new()
     {
         Resource = new Uri(serverUrl),
-        ResourceDocumentation = new Uri("https://docs.example.com/api/weather"),
+    ResourceDocumentation = new Uri("https://docs.example.com/api/math"),
         AuthorizationServers = { new Uri(authorizationServerUrl) },
         ScopesSupported = ["mcp:tools"]
     };
@@ -65,14 +65,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMcpServer()
-    .WithTools<WeatherTools>()
+    .WithTools<MathTools>()
     .WithHttpTransport();
-
-builder.Services.AddHttpClient("WeatherApi", client =>
-{
-    client.BaseAddress = new Uri("https://api.weather.gov");
-    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("weather-tool", "1.0"));
-});
 
 var app = builder.Build();
 
@@ -84,6 +78,7 @@ app.MapMcp().RequireAuthorization();
 Console.WriteLine($"Starting MCP server with authorization at {serverUrl}");
 Console.WriteLine($"Using Keycloak server at {authorizationServerUrl}");
 Console.WriteLine($"Protected Resource Metadata URL: {serverUrl}.well-known/oauth-protected-resource");
+Console.WriteLine("Exposed Math tools: Add, Multiply");
 Console.WriteLine("Press Ctrl+C to stop the server");
 
 app.Run(serverUrl);

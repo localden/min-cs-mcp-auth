@@ -1,6 +1,6 @@
 # Protected MCP Server Sample
 
-This sample demonstrates how to create an MCP server that requires OAuth 2.0 authentication to access its tools and resources. The server provides weather-related tools protected by JWT bearer token authentication.
+This sample demonstrates how to create an MCP server that requires OAuth 2.0 authentication to access its tools and resources. The server provides simple math tools (addition and multiplication) protected by JWT bearer token authentication.
 
 ## Overview
 
@@ -58,17 +58,15 @@ dotnet run
 
 ### Available Tools
 
-The server provides weather-related tools that require authentication:
+The server provides math tools that require authentication:
 
-1. **GetAlerts**: Get weather alerts for a US state
-   - Parameter: `state` (string) - 2-letter US state abbreviation
-   - Example: `GetAlerts` with `state: "WA"`
+1. **Add**: Add two numbers
+  - Parameters: `a` (double), `b` (double)
+  - Example: `Add` with `a: 2.5, b: 4.25` returns `6.75`
 
-2. **GetForecast**: Get weather forecast for a location
-   - Parameters: 
-     - `latitude` (double) - Latitude coordinate
-     - `longitude` (double) - Longitude coordinate
-   - Example: `GetForecast` with `latitude: 47.6062, longitude: -122.3321`
+2. **Multiply**: Multiply two numbers
+  - Parameters: `a` (double), `b` (double)
+  - Example: `Multiply` with `a: 3, b: 5` returns `15`
 
 ### Authentication Configuration
 
@@ -84,7 +82,7 @@ The server uses:
 - **ASP.NET Core** for hosting and HTTP handling
 - **JWT Bearer Authentication** for token validation
 - **MCP Authentication Extensions** for OAuth resource metadata
-- **HttpClient** for calling the weather.gov API
+- **Simple in-process logic** for math operations
 - **Authorization** to protect MCP endpoints
 
 ## Configuration Details
@@ -103,7 +101,7 @@ You can test the server directly using HTTP tools:
 
 ## External Dependencies
 
-The weather tools use the National Weather Service API at `api.weather.gov` to fetch real weather data.
+No external data dependencies for math tools.
 
 ## Troubleshooting
 
@@ -120,6 +118,6 @@ The weather tools use the National Weather Service API at `api.weather.gov` to f
 ## Key Files
 
 - `Program.cs`: Server setup with authentication and MCP configuration
-- `Tools/WeatherTools.cs`: Weather tool implementations
+- `Tools/MathTools.cs`: Math tool implementations (Add, Multiply)
 - `Tools/HttpClientExt.cs`: HTTP client extensions
 - `Properties/launchSettings.json`: Development launch configuration
