@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(options =>
     options.ResourceMetadata = new()
     {
         Resource = new Uri(serverUrl),
-    ResourceDocumentation = new Uri("https://docs.example.com/api/math"),
+        ResourceDocumentation = new Uri("https://docs.example.com/api/math"),
         AuthorizationServers = { new Uri(authorizationServerUrl) },
         ScopesSupported = ["mcp:tools"]
     };
